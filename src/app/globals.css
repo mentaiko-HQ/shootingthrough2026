@@ -1,26 +1,37 @@
+/* src/app/globals.css */
+
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* 
+    フォントファミリーの優先順位設定
+    先に定義した Inter（英数字）が優先され、Interに存在しない日本語文字には Zen Maru が適用されます
+  */
+  --font-sans: var(--font-inter), var(--font-zen-maru), ui-sans-serif, system-ui, sans-serif;
+
+  /* クリニック杜の里風の森のカラーパレット */
+  --color-theme-primary: #396C54;
+  --color-theme-secondary: #4A534B;
+  --color-theme-bg: #F7F9F6;
+  --color-theme-adminBg: #2C3E35;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    background-color: var(--color-theme-bg);
+    color: var(--color-theme-secondary);
+    
+    /* ページ全体の数字を等幅（Tabular Nums）に設定し、桁数によるレイアウト崩れを防ぐ */
+    font-variant-numeric: tabular-nums;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
