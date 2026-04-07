@@ -35,7 +35,7 @@ export default function HomePage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-4">
           {/* 一般公開用：成績閲覧ページ */}
           <a 
-            href="/result" 
+            href="/results" 
             className="group relative p-8 rounded-[2.5rem] bg-white/5 border border-white/10 hover:border-blue-500/50 hover:bg-blue-600/10 transition-all duration-500 text-left overflow-hidden flex flex-col justify-between min-h-[220px]"
           >
             <div className="space-y-4">
