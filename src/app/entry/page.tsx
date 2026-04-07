@@ -191,7 +191,7 @@ export default function EntryForm() {
   return (
     <div className="min-h-screen bg-theme-bg text-theme-secondary font-sans pb-20">
       
-      <Header title="TEAM ENTRY" subtitle="第100回 勇気凛々杯争奪弓道大会 - 参加申込" isAdmin={false} />
+      <Header title="参加申込" subtitle="第100回 勇気凛々杯争奪弓道大会" isAdmin={false} />
 
       <main className="max-w-3xl mx-auto mt-8 px-4">
         <form onSubmit={handleSubmit} className="space-y-8">

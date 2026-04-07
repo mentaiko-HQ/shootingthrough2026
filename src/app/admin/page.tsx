@@ -370,13 +370,13 @@ function AdminDashboardContent() {
 
   return (
     <div className="min-h-screen bg-theme-bg text-theme-secondary font-sans pb-20 relative">
-      <Header title="ADMIN" subtitle="管理者ダッシュボード" isAdmin={true} />
+      <Header title="管理者ダッシュボード" subtitle="第100回 勇気凛々杯争奪弓道大会" isAdmin={true} />
 
       <main className="max-w-[1200px] mx-auto mt-8 px-4 md:px-8">
         
         <div className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border-2 border-theme-secondary/10 mb-10 animate-fade-in-up">
           <h2 className="text-xl md:text-2xl font-black text-theme-secondary mb-2">
-            大会運営ポータルサイトへようこそ
+            大会運営サイトへようこそ
           </h2>
           <p className="font-bold text-theme-secondary/70 text-sm md:text-base leading-relaxed">
             大会役員専用の管理画面です。<br className="md:hidden" />
@@ -522,7 +522,7 @@ function AdminDashboardContent() {
                 />
                 <label
                   htmlFor="csv-upload"
-                  className={`w-full py-3 bg-theme-accent text-white font-black rounded-xl shadow-[0_4px_0_0_rgba(200,100,0,1)] hover:translate-y-[2px] hover:shadow-[0_2px_0_0_rgba(200,100,0,1)] transition-all flex items-center justify-center gap-2 cursor-pointer ${isImporting ? "opacity-50 pointer-events-none" : ""}`}
+                  className={`w-full py-3 bg-white text-theme-secondary border-2 border-theme-secondary/20 font-black rounded-xl hover:bg-theme-secondary/5 transition-colors flex items-center justify-center gap-2 cursor-pointer ${isImporting ? "opacity-50 pointer-events-none" : ""}`}
                 >
                   {isImporting ? "読込中..." : "CSVファイルを選択して登録"}
                 </label>

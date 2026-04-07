@@ -193,7 +193,7 @@ function ResultsContent() {
 
   return (
     <div className="min-h-screen bg-theme-bg text-theme-secondary font-sans pb-20 md:pb-40">
-      <Header title="第100回 勇気凛々杯争奪弓道大会" subtitle="大会成績" isAdmin={false} />
+      <Header title="大会成績" subtitle="第100回 勇気凛々杯争奪弓道大会" isAdmin={false} />
 
       <main className="max-w-[1200px] mx-auto mt-4 md:mt-8 px-2 md:px-8">
         
