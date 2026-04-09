@@ -476,7 +476,8 @@ function AdminDashboardContent() {
             <div className="h-[2px] flex-1 bg-theme-secondary/10"></div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* 3つのカードを綺麗に並べるため grid-cols-1 md:grid-cols-2 lg:grid-cols-3 に変更 */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="bg-white p-6 rounded-3xl border-2 border-theme-secondary/10 flex flex-col justify-between shadow-[0_4px_0_0_rgba(80,35,20,0.05)]">
               <div>
                 <h3 className="font-black text-theme-primary text-lg mb-2 flex items-center gap-2">
@@ -527,6 +528,24 @@ function AdminDashboardContent() {
                   {isImporting ? "読込中..." : "CSVファイルを選択して登録"}
                 </label>
               </div>
+            </div>
+
+            {/* 今回追加した野帳（スコアシート）ページへのリンク */}
+            <div className="bg-white p-6 rounded-3xl border-2 border-theme-secondary/10 flex flex-col justify-between shadow-[0_4px_0_0_rgba(80,35,20,0.05)]">
+              <div>
+                <h3 className="font-black text-theme-primary text-lg mb-2 flex items-center gap-2">
+                  <span>📝</span> 野帳出力・印刷
+                </h3>
+                <p className="text-xs font-bold text-theme-secondary/60 mb-6 leading-relaxed">
+                  大会当日に使用する採点用の野帳（スコアシート）を生成し、印刷するための専用ページへ移動します。
+                </p>
+              </div>
+              <Link
+                href="/admin/yacho"
+                className="w-full py-3 bg-white text-theme-secondary border-2 border-theme-secondary/20 font-black rounded-xl hover:bg-theme-secondary/5 transition-colors flex items-center justify-center text-center"
+              >
+                野帳ページを開く
+              </Link>
             </div>
           </div>
         </div>
