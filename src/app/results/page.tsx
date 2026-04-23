@@ -4,7 +4,8 @@
 
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { db } from "@/lib/firebase";
-import { collection, onSnapshot } from "firebase/firestore";
+// Firestoreから特定のドキュメントを監視するため、'doc' を追加インポート
+import { collection, onSnapshot, doc } from "firebase/firestore";
 import Header from "@/components/layout/Header";
 import Toast from "@/components/ui/Toast";
 
@@ -109,6 +110,9 @@ function ResultsContent() {
   const [subTab, setSubTab] = useState<string>("団体の部（男子）");
   const [toastMessage, setToastMessage] = useState<{ text: string; type: "success" | "error" } | null>(null);
   const [isRuleOpen, setIsRuleOpen] = useState(false);
+  
+  // ティッカー（お知らせ）の状態管理
+  const [tickerMessage, setTickerMessage] = useState("");
 
   const showToast = useCallback((text: string, type: "success" | "error") => {
     setToastMessage({ text, type });
@@ -116,6 +120,22 @@ function ResultsContent() {
   }, []);
 
   const { groupedEntries, isLoading } = useParticipantsData(showToast);
+
+  // Firestoreからティッカー（お知らせ）をリアルタイム取得する処理
+  useEffect(() => {
+    const tickerRef = doc(db, "settings", "ticker");
+    const unsubscribe = onSnapshot(tickerRef, (docSnap) => {
+      if (docSnap.exists()) {
+        setTickerMessage(docSnap.data().message || "");
+      } else {
+        setTickerMessage("");
+      }
+    }, (error) => {
+      console.error("❌ ティッカー取得エラー:", error);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const visibleSubTabs = useMemo(() => SUB_TABS.filter(tab => {
     if (mainTab === "team_kessho" || mainTab === "team_izume" || mainTab === "confirm") return tab.type === "team";
@@ -196,6 +216,16 @@ function ResultsContent() {
       <Header title="大会成績" subtitle="第100回 勇気凛々杯争奪弓道大会" isAdmin={false} />
 
       <main className="max-w-[1200px] mx-auto mt-4 md:mt-8 px-2 md:px-8">
+
+        {/* お知らせ（ティッカー）表示エリア */}
+        {tickerMessage && (
+          <div className="mb-4 md:mb-6 p-4 bg-yellow-100 border border-yellow-300 rounded-xl md:rounded-2xl shadow-sm text-yellow-900 font-bold text-sm md:text-base animate-fade-in-up flex items-start gap-2 md:gap-3">
+            <span className="text-xl md:text-2xl leading-none">📢</span>
+            <div className="flex-1 whitespace-pre-wrap break-words leading-relaxed pt-0.5">
+              {tickerMessage}
+            </div>
+          </div>
+        )}
         
         <div className="mb-4 md:mb-6 animate-fade-in-up">
           <button onClick={() => setIsRuleOpen(!isRuleOpen)} className="w-full flex items-center justify-between p-3 md:p-4 bg-white border border-theme-secondary/10 rounded-xl md:rounded-2xl shadow-sm hover:bg-gray-50 transition-colors">
