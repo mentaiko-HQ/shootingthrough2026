@@ -39,7 +39,7 @@ export type EntryGroup = {
   members: ParticipantDoc[];
 };
 
-const RANK_OPTIONS = ["無指定", "初段", "弐段", "参段", "四段", "五段", "錬士", "教士", "範士"];
+const RANK_OPTIONS = ["弐段以下", "参段以上", "称号者"];
 
 type Props = {
   group: EntryGroup | null;

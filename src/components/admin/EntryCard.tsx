@@ -152,8 +152,9 @@ export default function EntryCard({
                 !group.members[0]?.basic_info?.bib_number
                   ? "bg-gray-100 text-gray-400 border-2 border-gray-200 cursor-not-allowed"
                   : isQrSent
-                    ? "bg-white text-theme-secondary border-2 border-theme-secondary/30 hover:border-theme-primary hover:text-theme-primary"
-                    : "bg-theme-accent text-white shadow-[0_4px_0_0_rgba(200,100,0,1)] hover:translate-y-[2px] hover:shadow-[0_2px_0_0_rgba(200,100,0,1)]"
+                    ? "bg-white text-slate-700 border-2 border-slate-300 hover:border-slate-400 hover:bg-slate-50"
+                    // 🌟 【修正箇所】未定義カラーを避け、確実にオレンジ色（bg-orange-600）が出るように修正
+                    : "bg-orange-600 text-white shadow-[0_4px_0_0_rgba(194,65,12,1)] hover:translate-y-[2px] hover:shadow-[0_2px_0_0_rgba(194,65,12,1)]"
               }`}
             >
               {isSendingQR ? (

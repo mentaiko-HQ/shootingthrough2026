@@ -47,10 +47,15 @@ export const sendQRCodeMail = async (
   }
 
   try {
+    // 🌟 【修正箇所】受付機材での読み取りに最適化した最強設定
     const qrDataUrl = await QRCode.toDataURL(group.entry_group_id, {
-      width: 300,
-      margin: 2,
-      color: { dark: "#000000", light: "#ffffff" },
+      errorCorrectionLevel: 'H', // エラー訂正レベル最高（画面の反射や傷に強くなる）
+      margin: 4,                 // 必須の白い余白（クワイエットゾーン）を確実に確保
+      scale: 10,                 // 画像解像度を上げてエッジをくっきりとさせる
+      color: { 
+        dark: "#000000",         // ドットを完全な黒に
+        light: "#ffffff"         // 背景を完全な白にしてコントラストを最大化
+      },
     });
 
     const response = await fetch(qrDataUrl);

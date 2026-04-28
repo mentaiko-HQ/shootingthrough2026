@@ -141,7 +141,7 @@ export default function AdminEntriesPage() {
             onClick={() => setActiveTab("bibs")}
             className={`flex-1 py-4 rounded-2xl font-black text-lg transition-all ${
               activeTab === "bibs"
-                ? "bg-theme-accent text-white shadow-[0_6px_0_0_rgba(200,100,0,1)] translate-y-0"
+                ? "bg-theme-accent text-black shadow-[0_6px_0_0_rgba(200,100,0,1)] translate-y-0"
                 : "bg-white text-theme-secondary/60 border-2 border-theme-secondary/20 shadow-none translate-y-[6px] hover:bg-theme-secondary/5"
             }`}
           >

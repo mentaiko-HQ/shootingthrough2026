@@ -1,8 +1,6 @@
-// src/app/admin/input/components.tsx
-
 "use client";
 
-import React, { Component, ErrorInfo, ReactNode, useMemo } from "react";
+import React, { Component, ErrorInfo, ReactNode, useMemo, useState, useEffect } from "react";
 import { EntryGroup, GroupCardProps, checkYosenPass, checkIndividualYosenPass } from "./shared";
 
 // ============================================================================
@@ -67,6 +65,43 @@ export const ScoreButtons = React.memo(({ currentScore, maxScore, onUpdate }: { 
   </div>
 ));
 ScoreButtons.displayName = "ScoreButtons";
+
+// 🌟 【新規追加】他端末からの更新で入力中の文字が消えないようにするための専用コンポーネント
+const EnkinInput = React.memo(({ memberId, initialValue, onUpdate }: { memberId: string; initialValue: string; onUpdate: (id: string, val: string) => void }) => {
+  const [localValue, setLocalValue] = useState(initialValue);
+  const [isEditing, setIsEditing] = useState(false);
+
+  // Firestoreから新しいデータが降ってきたとき、編集中でなければ画面を更新する
+  useEffect(() => {
+    if (!isEditing) {
+      setLocalValue(initialValue);
+    }
+  }, [initialValue, isEditing]);
+
+  const handleBlur = () => {
+    setIsEditing(false);
+    // フォーカスが外れたタイミングで初めてFirestoreへ保存処理を走らせる
+    if (localValue !== initialValue) {
+      onUpdate(memberId, localValue);
+    }
+  };
+
+  return (
+    <input 
+      type="text" 
+      value={localValue} 
+      onFocus={() => setIsEditing(true)}
+      onBlur={handleBlur}
+      onChange={(e) => setLocalValue(e.target.value)} 
+      placeholder="例: 1位" 
+      className={`w-20 p-2 border-2 rounded-lg outline-none font-bold text-center text-xs shadow-inner transition-colors ${
+        isEditing ? "bg-blue-50 border-blue-400 text-blue-900" : "bg-white border-gray-200 focus:border-theme-primary text-theme-secondary"
+      }`} 
+    />
+  );
+});
+EnkinInput.displayName = "EnkinInput";
+
 
 const areGroupsEqual = (prevProps: GroupCardProps, nextProps: GroupCardProps) => {
   return prevProps.mainTab === nextProps.mainTab && JSON.stringify(prevProps.group) === JSON.stringify(nextProps.group);
@@ -191,7 +226,12 @@ export const GroupCard = React.memo(({ group, mainTab, handlers }: GroupCardProp
                       <div className="hidden sm:block w-px h-10 bg-gray-300"></div>
                       <div className="flex items-center gap-2">
                         <span className="text-xs font-bold text-gray-500 whitespace-nowrap">遠近:</span>
-                        <input type="text" value={member.results?.enkin || ""} onChange={(e) => handlers.handleEnkinUpdate(member.id, e.target.value)} placeholder="例: 1位" className="w-20 p-2 bg-white border-2 border-gray-200 rounded-lg outline-none focus:border-theme-primary text-xs font-bold text-center shadow-inner" />
+                        {/* 🌟 修正した EnkinInput コンポーネントを使用 */}
+                        <EnkinInput 
+                          memberId={member.id} 
+                          initialValue={member.results?.enkin || ""} 
+                          onUpdate={handlers.handleEnkinUpdate} 
+                        />
                       </div>
                     </div>
                   )}
